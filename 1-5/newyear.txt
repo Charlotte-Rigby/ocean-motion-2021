@@ -1,0 +1,4 @@
+oldyear = 2020
+new = 1
+
+print(oldyear + new)
