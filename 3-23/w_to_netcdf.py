@@ -9,6 +9,7 @@ num_lon = 122
 levels = 1
 dates = 1356
 
+#path to w files (created by fortran code)
 w_path = '/Users/helenfellow/Documents/cnn_paper/data/atlantic-data/s-omega/w/'
 
 date_list = open('/Users/helenfellow/Documents/cnn_paper/other_peoples_code/run-atlantic-again/date_list-08-18.txt','r')
@@ -16,12 +17,15 @@ date_list = open('/Users/helenfellow/Documents/cnn_paper/other_peoples_code/run-
 w_array = np.zeros((dates,num_lat,num_lon,levels))
 
 for d in range(0,dates):
+	#creates file name from date_list
 	filename = "s_"+(date_list.readline()).strip('\n')+"_ww.gr"
 	print(filename)
 	if os.path.isfile(w_path+filename):
+		#opens w file
 		w_file = open(w_path+filename,"r")
 		w_file.readline()
 		w_file.readline()
+		#loops through depth
 		for i in range(0,levels):
 			for j in range(0,num_lat):
 				for k in range(0,num_lon):
@@ -35,6 +39,7 @@ longitude_val = np.arange(311.875+.5,342.125-0.25,0.25)
 time_val = np.arange(377064,604704+168,168)
 print(time_val.size)
 
+# opens netcdf file
 grp = Dataset('/Users/helenfellow/Documents/cnn_paper/data/atlantic-data/s-atlantic-w-08-18.nc','w', format='NETCDF4')
 grp.createDimension('lon', num_lon-4)
 grp.createDimension('lat', num_lat-4)
@@ -52,6 +57,7 @@ latitude[:] = latitude_val
 time[:] = time_val
 depth[:]= [1]
 
+#creates variables in numpy array
 w[:] = w_array[:,2:156,2:120,:]
 
 time.units = 'hours since 1950-01-01'
@@ -62,6 +68,7 @@ depth.axis = 'Z'
 
 w.units = 'm/day'
 
+#closes netcdf file
 grp.close()
 
 

@@ -12,7 +12,7 @@ while read p; do
   
   ./vectorq.exec
   ./omegainv.exec
-done <date_list.txt
+done <date_list-t5.txt
 
 STRING="Done"
 echo $STRING
